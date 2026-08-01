@@ -1,0 +1,25 @@
+# Power BI
+*.pbix.bak
+~$*.pbix
+*.pbix.lock
+
+# Se optar por versionar só o formato .pbip (recomendado — ver README):
+# descomente as linhas abaixo para ignorar o .pbix binário
+# *.pbix
+
+# Cache local do Power BI Desktop
+.pbi/
+*.tmp
+
+# Dados de origem (CSV) — não versionar dados sensíveis/pesados
+/Dados/
+*.csv
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+*.swp
