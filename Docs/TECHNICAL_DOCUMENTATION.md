@@ -324,7 +324,3 @@ in
 | Detalhamento | 17 | Drill-through por Loja/Cidade/Canal/Mês |
 | Insights | 28 (só texto) | Achados de negócio e premissas, sem gráficos |
 | TT Loja / TT Cidade / TT Dia | 5 cada | Tooltips customizados |
-
-## 6. Pendências conhecidas
-
-Ver seção final do [`CHANGELOG.md`](../CHANGELOG.md) para a lista de itens de prioridade média/baixa ainda não endereçados (função M reutilizável, paleta de dados customizada, etc.).
