@@ -1,4 +1,4 @@
-# Documentação Técnica — Operação do Delivery Center
+# Documentação Técnica — Delivery Pulse
 
 Estado do modelo após as correções registradas em [`CHANGELOG.md`](../CHANGELOG.md). Extraído por conexão direta ao modelo semântico (Power BI Desktop / Analysis Services local).
 
