@@ -1,61 +1,153 @@
-# Operação do Delivery Center
+<div align="center">
 
-Dashboard de Business Intelligence para operação de um Delivery Center (marketplace de entregas), cobrindo o período de **01/jan a 30/abr/2021**. Construído em Power BI, com modelo star schema, 57 medidas DAX e 10 páginas de relatório cobrindo visão executiva, financeira, comercial, operação/logística, análise temporal e insights de negócio.
+<!-- ![Delivery Pulse](assets/cover/cover-image.png) -->
+
+# 🚚 Delivery Pulse
+
+### Business Intelligence para Operações de Delivery em Escala
+
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-57%20medidas-blue?style=for-the-badge)
+![Star Schema](https://img.shields.io/badge/Modelo-Star%20Schema-lightgrey?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-success?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
 
 **Autora:** Liliam Kezia Oliveira Souza
 
----
-
-## ⚠️ Antes de publicar no Git — leia isto
-
-Este repositório contém um arquivo `.pbix`, que é um **binário compactado** (não é texto). Isso tem duas consequências importantes:
-
-1. **Git não consegue mostrar diffs legíveis** de um `.pbix` — cada commit substitui o arquivo inteiro, sem histórico linha a linha de medidas DAX, consultas M ou relacionamentos.
-2. **Repositórios acumulam tamanho rapidamente**, já que cada versão salva grava o binário completo de novo (esse arquivo tem ~73 MB).
-
-### Recomendação: publicar também em formato `.pbip` (Power BI Project)
-
-O Power BI Desktop moderno suporta salvar o projeto como **`.pbip`**, que quebra o projeto em arquivos de texto (formato TMDL) — isso sim é git-friendly: diffs legíveis, histórico real de cada medida/coluna/relacionamento, merge/revisão de PR possíveis.
-
-**Como gerar:** no Power BI Desktop, com o arquivo aberto → **Arquivo → Salvar Como** → escolha o tipo **Power BI Project (.pbip)**. Isso cria uma estrutura assim:
-
-```
-OperaçãoDoDeliveryCenter.pbip
-OperaçãoDoDeliveryCenter.Report/       ← definição do relatório (páginas, visuais) em JSON
-OperaçãoDoDeliveryCenter.SemanticModel/ ← modelo (tabelas, DAX, Power Query) em TMDL, texto puro
-```
-
-Depois de gerar, é essa pasta (`.Report` + `.SemanticModel` + o `.pbip`) que deve ir pro Git — o `.pbix` pode continuar existindo localmente como cópia de trabalho, mas não precisa (nem deveria, idealmente) ser versionado linha a linha.
-
-Se por algum motivo o `.pbix` precisar mesmo ir para o repositório (ex.: como artefato de distribuição, não como fonte versionada), considere usar **Git LFS** (Large File Storage) pra não inchar o histórico do repo com binários grandes.
+</div>
 
 ---
 
-## Estrutura deste repositório
+## 💎 Proposta de valor
+
+> Um case de Business Intelligence completo — da modelagem de dados brutos à decisão executiva — que transforma **369 mil pedidos** de um Delivery Center em um sistema de decisão com **57 métricas de negócio**, star schema auditável e uma camada de insights que já aponta, com números, onde a operação está sangrando margem.
+
+## 📄 Resumo executivo
+
+Um Delivery Center processou quase 369 mil pedidos entre janeiro e abril de 2021, mas operava sem visibilidade estruturada sobre onde estava ganhando e onde estava perdendo dinheiro.
+
+**Delivery Pulse** resolve isso com um pipeline completo: ETL parametrizado, modelo star schema com 8 relacionamentos auditados, 57 medidas DAX organizadas por domínio de negócio, e um relatório de 7 páginas que separa a leitura executiva da leitura operacional.
+
+O resultado já revelou riscos reais de negócio:
+
+| Achado | Número |
+|---|---|
+| 🎯 Concentração de receita em 1 única loja | **34%** |
+| 💸 Margem negativa em frete (subsídio) | **-R$ 435 mil** |
+| 🌙 Pedidos concentrados no período noturno (18h–23h) | **48%** |
+| 🛒 Dependência de marketplaces terceiros | **90%** |
+
+Detalhes completos da análise em [`docs/BUSINESS_CASE.md`](docs/BUSINESS_CASE.md).
+
+---
+
+## 📸 Preview
+
+### Visão Executiva
+![Visão Executiva](assets/screenshots/01-visao-executiva.png)
+
+### Financeira
+![Financeira](assets/screenshots/02-financeira.png)
+
+### Comercial
+![Comercial](assets/screenshots/03-comercial.png)
+
+### Operação
+![Operação](assets/screenshots/04-operacao.png)
+
+### Temporal
+![Temporal](assets/screenshots/05-temporal.png)
+
+### Detalhamento (drill-through)
+![Detalhamento](assets/screenshots/06-detalhamento.png)
+
+### Insights
+![Insights](assets/screenshots/07-insights.png)
+
+![Demo](assets/demo/delivery-pulse-demo.gif)
+
+---
+
+## 🗂️ Sumário
+
+- [Estrutura do relatório](#-estrutura-do-relatório)
+- [Arquitetura técnica](#-arquitetura-técnica)
+- [Estrutura do repositório](#-estrutura-do-repositório)
+- [Como abrir o projeto](#-como-abrir-o-projeto)
+- [Documentação](#-documentação)
+- [Nota técnica: .pbix vs .pbip](#-nota-técnica-pbix-vs-pbip)
+
+---
+
+## 🧭 Estrutura do relatório
+
+| Página | O que mostra |
+|---|---|
+| **Visão Executiva** | KPIs centrais e variação mês a mês, panorama consolidado |
+| **Financeira** | Receita, take rate, margem de frete, chargebacks |
+| **Comercial** | Desempenho por loja, segmento e tipo de plano |
+| **Operação** | Logística, entregadores, mapa de hubs |
+| **Temporal** | Sazonalidade, heatmap de demanda por hora × dia da semana |
+| **Detalhamento** | Tabela drill-through por Loja, Cidade, Canal ou Mês |
+| **Insights** | Achados de negócio e premissas de dados, em texto |
+
+## 🏗️ Arquitetura técnica
+
+- **Modelo:** star schema — 3 tabelas fato (`fPedidos`, `fPagamentos`, `fEntregas`) + 6 dimensões, 8 relacionamentos Many-to-One
+- **DAX:** 57 medidas organizadas em 5 pastas temáticas (KPIs, Financeiro, Operacional, Inteligência de Tempo, Auxiliares)
+- **ETL:** Power Query parametrizado, com tratamento de encoding, outliers e tipos de dados
+- **Extras:** drill-through dedicado, 3 páginas de tooltip customizado, medida de documentação técnica embutida no próprio modelo
+
+## 📁 Estrutura do repositório
 
 ```
-├── README.md                          ← este arquivo
-├── CHANGELOG.md                       ← histórico de correções aplicadas
+delivery-pulse/
+├── README.md
+├── CHANGELOG.md
+├── LICENSE
 ├── .gitignore
-├── OPERAÇÃO_DO_DELIVERY_CENTER....pbix ← arquivo de trabalho (Power BI Desktop)
-└── docs/
-    └── TECHNICAL_DOCUMENTATION.md     ← modelo de dados, DAX, ETL, decisões de design
+├── assets/
+│   ├── screenshots/     ← imagens das páginas do relatório
+│   ├── demo/             ← GIF de navegação
+│   └── cover/            ← imagem de capa
+├── docs/
+│   ├── TECHNICAL_DOCUMENTATION.md   ← modelo, DAX, ETL completos
+│   ├── DATA_DICTIONARY.md           ← dicionário de dados tabela a tabela
+│   ├── BUSINESS_CASE.md             ← case de negócio detalhado
+│   └── AUDIT_REPORT.md              ← auditoria técnica própria (UX, DAX, performance...)
+├── src/
+│   └── Delivery Pulse.pbix
+└── data/
+    └── README.md         ← estrutura de dados esperada para refresh
 ```
 
-## Como abrir
+## 💻 Como abrir o projeto
 
 1. Requer **Power BI Desktop** (Windows).
-2. Ao abrir, o parâmetro `pCaminhoFonte` precisa apontar para uma pasta local contendo os 6 arquivos CSV de origem (`orders.csv`, `payments.csv`, `channels.csv`, `hubs.csv`, `stores.csv`, `drivers.csv`). Ajuste em **Transformar Dados → Editar Parâmetros**.
-3. Clique em **Atualizar** para carregar os dados.
+2. Baixe `src/Delivery Pulse.pbix`.
+3. Ajuste o parâmetro `pCaminhoFonte` (**Transformar Dados → Editar Parâmetros**) para a pasta local com os CSVs de origem — ver [`data/README.md`](data/README.md) para a estrutura esperada.
+4. Clique em **Atualizar**.
 
-## Visão geral técnica
+## 📚 Documentação
 
-- **Modelo:** star schema, 3 tabelas fato (`fPedidos`, `fPagamentos`, `fEntregas`) + 6 dimensões, 8 relacionamentos (todos Many-to-One, filtro em direção única).
-- **DAX:** 57 medidas organizadas em 5 pastas temáticas (KPIs, Financeiro, Operacional, Inteligência de Tempo, Auxiliares), mais uma medida de documentação técnica embutida no próprio modelo.
-- **Páginas:** Visão Executiva, Financeira, Comercial, Operação, Temporal, Detalhamento (drill-through), Insights, + 3 páginas de tooltip customizado.
+| Documento | Conteúdo |
+|---|---|
+| [`docs/BUSINESS_CASE.md`](docs/BUSINESS_CASE.md) | Case de negócio completo, achados quantificados, premissas assumidas |
+| [`docs/TECHNICAL_DOCUMENTATION.md`](docs/TECHNICAL_DOCUMENTATION.md) | Todas as 57 medidas DAX, código Power Query, modelo de dados |
+| [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) | Dicionário de dados — toda tabela e coluna do modelo |
+| [`docs/AUDIT_REPORT.md`](docs/AUDIT_REPORT.md) | Auditoria técnica própria — UX, Power Query, modelagem, DAX, performance, storytelling |
+| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de correções técnicas aplicadas ao projeto |
 
-Detalhes completos — todas as fórmulas DAX, código Power Query, relacionamentos e decisões de design — estão em [`docs/TECHNICAL_DOCUMENTATION.md`](docs/TECHNICAL_DOCUMENTATION.md).
+---
 
-## Licença / Uso
+## 🔧 Nota técnica: .pbix vs .pbip
 
-Defina aqui a licença do projeto (ex.: MIT, ou "uso interno/portfólio pessoal") antes de tornar o repositório público.
+Este repositório versiona o `.pbix` (formato binário padrão). Para trabalho colaborativo via Git, o formato **`.pbip`** (Power BI Project) é recomendado — grava o modelo em texto puro (TMDL), permitindo diffs legíveis por medida/coluna/relacionamento. Gerar via **Arquivo → Salvar Como → Power BI Project (.pbip)** no Power BI Desktop.
+
+---
+
+<div align="center">
+
+*Case de portfólio em Business Intelligence — Power BI, DAX, modelagem dimensional e Power Query.*
+
+</div>
