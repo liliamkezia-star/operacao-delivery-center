@@ -136,7 +136,7 @@ delivery-pulse/
 | [`docs/TECHNICAL_DOCUMENTATION.md`](docs/TECHNICAL_DOCUMENTATION.md) | Todas as 57 medidas DAX, código Power Query, modelo de dados |
 | [`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md) | Dicionário de dados — toda tabela e coluna do modelo |
 | [`docs/AUDIT_REPORT.md`](docs/AUDIT_REPORT.md) | Auditoria técnica própria — UX, Power Query, modelagem, DAX, performance, storytelling |
-| [`CHANGELOG.md`](CHANGELOG.md) | Histórico de correções técnicas aplicadas ao projeto |
+
 
 ---
 
