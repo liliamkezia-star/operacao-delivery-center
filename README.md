@@ -140,11 +140,6 @@ delivery-pulse/
 
 ---
 
-## 🔧 Nota técnica: .pbix vs .pbip
-
-Este repositório versiona o `.pbix` (formato binário padrão). Para trabalho colaborativo via Git, o formato **`.pbip`** (Power BI Project) é recomendado — grava o modelo em texto puro (TMDL), permitindo diffs legíveis por medida/coluna/relacionamento. Gerar via **Arquivo → Salvar Como → Power BI Project (.pbip)** no Power BI Desktop.
-
----
 
 <div align="center">
 
